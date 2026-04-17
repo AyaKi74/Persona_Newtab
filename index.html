@@ -36,7 +36,7 @@
         #overlay {
                 position: fixed;
                 z-index: -2;
-                bottom: 1px;
+                bottom: 0px;
                 left: 0;
                 width: 100%;
                 min-height: 100vh;
@@ -87,6 +87,27 @@
                 text-shadow: 1px 1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
                     -1px -1px 0 #000; */
             }
+        #date-container {
+                z-index: 0;
+                top: calc(50vh - 350px - 100px);
+                right: 680px;
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                transform: rotate(-90deg);
+                font-size: 36px;
+                /* font-variant-numeric: tabular-nums; */
+                font-weight: 600;
+                opacity: 0.9;
+                color: #000000;
+                user-select: none;
+                -webkit-user-drag: none;
+                pointer-events: none;
+                -webkit-text-stroke: 0.6px rgb(254 11 11); 
+                /* optional: make the inside transparent */
+                color: black; 
+                
+            }
 
     </style> 
 
@@ -101,6 +122,15 @@
             <h1 id = time>
                 <span id ="hour">00</span>:<span id = "minute">00</span>
             </h1>
+
+            <div id = "date-container">
+                <h1 id = date>
+                <span id = "day">monday</span>
+                <span id = "number">00</span>
+                <span id = "month">january</span>
+            </h1>
+            </div>
+            
         </main>
     </div>
     
