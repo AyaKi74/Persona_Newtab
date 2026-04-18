@@ -56,10 +56,7 @@
                 );
             }
         #app {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-self: center;
+                position: relative;
                 width: 100%;
                 max-width: 620px;
                 min-height: 100vh;
@@ -69,44 +66,114 @@
 
         #time {
                 z-index: 0;
-                top: calc(50vh - 200px - 100px);
-                left: 300px;
-                margin: 0;
                 position: absolute;
-                width: 100%;
-                text-align: center;
+                top: 80px;
+                right: 40px;
+                margin: 0;
                 font-size: 120px;
-                /* font-variant-numeric: tabular-nums; */
                 font-weight: 600;
                 opacity: 0.9;
                 color: #fff;
                 user-select: none;
                 -webkit-user-drag: none;
                 pointer-events: none;
-                /* text-shadow: 0 8px 32px rgba(255, 255, 255, 0.375);
-                text-shadow: 1px 1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-                    -1px -1px 0 #000; */
+                white-space: nowrap;
+                text-shadow:
+                    0 0 12px rgba(0, 217, 255, 0.65),
+                    1px 1px 0 #00D9FF,
+                    -1px 1px 0 #00D9FF,
+                    1px -1px 0 #00D9FF,
+                    -1px -1px 0 #00D9FF;
             }
-        #date-container {
+        #date {
                 z-index: 0;
-                top: calc(50vh - 350px - 100px);
-                right: 680px;
-                margin: 0;
-                position: absolute;
-                width: 100%;
+                position: static;
                 transform: rotate(-90deg);
-                font-size: 36px;
-                /* font-variant-numeric: tabular-nums; */
-                font-weight: 600;
+                transform-origin: center;
+                margin: 0;
+                width: auto;
+                white-space: nowrap;
+                font-size: 80px;
+                font-weight: 1100;
                 opacity: 0.9;
                 color: #000000;
                 user-select: none;
                 -webkit-user-drag: none;
                 pointer-events: none;
-                -webkit-text-stroke: 0.6px rgb(254 11 11); 
-                /* optional: make the inside transparent */
-                color: black; 
-                
+                text-shadow:
+                    1px 1px 0 #fe0b0b,
+                    -1px 1px 0 #FE0B0B,
+                    1px -1px 0 #FE0B0B,
+                    -1px -1px 0 #FE0B0B;
+            }
+
+        .social-media {
+                position: absolute;
+                top: 300px;
+                right: 50px;
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+                align-items: flex-start;
+                z-index: 1;
+            }
+
+        #date-container {
+                position: fixed;
+                left: -230px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 10;
+            }
+
+        
+
+        .instagram,
+        .youtube,
+        .google {
+                position: relative;
+                font-size: 80px;
+                font-weight: 1000;
+                color: #fff;
+                text-align: left;
+                cursor: pointer;
+                margin: 0;
+                white-space: nowrap;
+                text-decoration: none;
+                display: block;
+                transform-origin: left center;
+                transition: transform 0.35s ease, text-shadow 0.35s ease, color 0.35s ease;
+                text-shadow:
+                    0 0 10px rgba(0, 217, 255, 0.55),
+                    1px 1px 0 #00D9FF,
+                    -1px 1px 0 #00D9FF,
+                    1px -1px 0 #00D9FF,
+                    -1px -1px 0 #00D9FF;
+            }
+
+        .instagram:hover,
+        .youtube:hover,
+        .google:hover {
+                transform: scale(1.12);
+                color: #000;
+                text-shadow:
+                    1px 1px 0 #FE0B0B,
+                    -1px 1px 0 #FE0B0B,
+                    1px -1px 0 #FE0B0B,
+                    -1px -1px 0 #FE0B0B;
+            }
+
+        .instagram:hover::before,
+        .youtube:hover::before,
+        .google:hover::before {
+                content: '';
+                position: absolute;
+                left: -30px;
+                top: 50%;
+                transform: translateY(-50%) rotate(45deg);
+                width: 14px;
+                height: 14px;
+                background: #FE0B0B;
             }
 
     </style> 
@@ -123,18 +190,41 @@
                 <span id ="hour">00</span>:<span id = "minute">00</span>
             </h1>
 
-            <div id = "date-container">
-                <h1 id = date>
+            <div class="social-media">
+                <a href="https://instagram.com" target="_blank" class="instagram">Instagram</a>
+                <a href="https://youtube.com" target="_blank" class="youtube">Youtube</a>
+                <a href="https://google.com" target="_blank" class="google">Google</a>
+            </div>
+        </main>
+
+        <div id="date-container">
+            <h1 id = date>
                 <span id = "day">monday</span>
                 <span id = "number">00</span>
                 <span id = "month">january</span>
             </h1>
-            </div>
-            
-        </main>
+        </div>
     </div>
-    
-    
-    
+
+    <script src="https://unpkg.com/dayjs@1.11.9/dayjs.min.js"></script>
+    <script>
+        const hourEl = document.getElementById('hour');
+        const minuteEl = document.getElementById('minute');
+        const dayEl = document.getElementById('day');
+        const numberEl = document.getElementById('number');
+        const monthEl = document.getElementById('month');
+
+        function updateDateTime() {
+            const now = dayjs();
+            hourEl.textContent = now.format('HH');
+            minuteEl.textContent = now.format('mm');
+            dayEl.textContent = now.format('dddd').toLowerCase();
+            numberEl.textContent = now.format('DD');
+            monthEl.textContent = now.format('MMMM').toLowerCase();
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000 * 60);
+    </script>
 </body>
 </html>
